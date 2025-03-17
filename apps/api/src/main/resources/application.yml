@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: sample
+  liquibase:
+    enabled: false
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+    path: /
+
