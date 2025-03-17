@@ -1,2 +1,1 @@
-# spring-boot-java-sample
-Spring Boot Java sample project
+# Spring Boot Java sample
