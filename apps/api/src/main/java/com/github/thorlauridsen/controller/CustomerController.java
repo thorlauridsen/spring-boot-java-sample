@@ -8,9 +8,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.UUID;
 
+/**
+ * Customer controller class.
+ * This class is a controller for the customer model.
+ */
 @Controller
 public class CustomerController {
 
+    /**
+     * Get method for customer.
+     * This method returns a customer.
+     *
+     * @return ResponseEntity of customer.
+     */
     @GetMapping("/customer")
     @Operation(
             summary = "Retrieve a customer",
