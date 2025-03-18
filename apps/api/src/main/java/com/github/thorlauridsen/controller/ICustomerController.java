@@ -2,6 +2,7 @@ package com.github.thorlauridsen.controller;
 
 import com.github.thorlauridsen.dto.CustomerDto;
 import com.github.thorlauridsen.dto.CustomerInputDto;
+import com.github.thorlauridsen.exception.CustomerNotFoundException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -44,6 +45,7 @@ public interface ICustomerController {
      * This method returns a customer given an id.
      *
      * @param id UUID of the customer to retrieve.
+     * @throws CustomerNotFoundException if the customer is not found.
      * @return ResponseEntity of customer.
      */
     @GetMapping("/{id}")
@@ -54,5 +56,5 @@ public interface ICustomerController {
     ResponseEntity<CustomerDto> get(
             @Parameter(description = "UUID of the customer to retrieve", required = true)
             @PathVariable UUID id
-    );
+    ) throws CustomerNotFoundException;
 }

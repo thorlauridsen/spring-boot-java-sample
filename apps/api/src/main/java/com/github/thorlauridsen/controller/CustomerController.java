@@ -3,6 +3,7 @@ package com.github.thorlauridsen.controller;
 import com.github.thorlauridsen.Customer;
 import com.github.thorlauridsen.dto.CustomerDto;
 import com.github.thorlauridsen.dto.CustomerInputDto;
+import com.github.thorlauridsen.exception.CustomerNotFoundException;
 import com.github.thorlauridsen.service.CustomerService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -52,10 +53,12 @@ public class CustomerController implements ICustomerController {
      * Get method for customer.
      * This method returns a customer.
      *
+     * @param id UUID of the customer to retrieve.
+     * @throws CustomerNotFoundException if the customer is not found.
      * @return ResponseEntity of customer.
      */
     @Override
-    public ResponseEntity<CustomerDto> get(UUID id) {
+    public ResponseEntity<CustomerDto> get(UUID id) throws CustomerNotFoundException {
         var customer = customerService.findById(id);
         return ResponseEntity.ok(toDto(customer));
     }
