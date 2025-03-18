@@ -1,6 +1,7 @@
 package com.github.thorlauridsen;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.lang.NonNull;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -18,5 +19,5 @@ public interface CustomerRepo extends JpaRepository<CustomerEntity, UUID> {
      * @param id UUID of the customer.
      * @return {@link Optional} of {@link CustomerEntity}.
      */
-    Optional<CustomerEntity> findById(UUID id);
+    @NonNull Optional<CustomerEntity> findById(@NonNull UUID id);
 }
