@@ -10,7 +10,9 @@ import com.github.thorlauridsen.CustomerInput;
  *
  * @param mail Mail as string of the customer.
  */
-public record CustomerInputDto(@JsonProperty("mail") String mail) {
+public record CustomerInputDto(
+        @JsonProperty("mail") String mail
+) {
 
     /**
      * Converts the DTO to a model.

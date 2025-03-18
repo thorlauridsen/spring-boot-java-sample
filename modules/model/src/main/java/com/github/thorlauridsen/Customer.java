@@ -9,5 +9,8 @@ import java.util.UUID;
  * @param id   UUID of the customer.
  * @param mail Mail as string of the customer.
  */
-public record Customer(UUID id, String mail) {
+public record Customer(
+        UUID id,
+        String mail
+) {
 }

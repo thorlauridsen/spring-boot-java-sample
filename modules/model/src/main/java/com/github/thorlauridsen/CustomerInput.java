@@ -6,5 +6,7 @@ package com.github.thorlauridsen;
  *
  * @param mail Mail as string of the customer.
  */
-public record CustomerInput(String mail) {
+public record CustomerInput(
+        String mail
+) {
 }

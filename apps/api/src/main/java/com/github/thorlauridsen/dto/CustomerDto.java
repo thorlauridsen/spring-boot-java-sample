@@ -12,5 +12,8 @@ import java.util.UUID;
  * @param id   UUID of the customer.
  * @param mail Mail as string of the customer.
  */
-public record CustomerDto(@JsonProperty("id") UUID id, @JsonProperty("mail") String mail) {
+public record CustomerDto(
+        @JsonProperty("id") UUID id,
+        @JsonProperty("mail") String mail
+) {
 }
