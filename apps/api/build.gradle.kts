@@ -4,12 +4,12 @@ plugins {
 }
 
 dependencies {
-	// The api subproject needs access to the model subproject
+	// The api subproject needs access to both the model and persistence subproject
 	implementation(projects.model)
+	implementation(projects.persistence)
 
 	// Spring Boot dependencies
 	implementation(local.springboot.starter)
-	implementation(local.springboot.starter.jpa)
 	implementation(local.springboot.starter.web)
 
 	// H2 database dependency for in-memory database

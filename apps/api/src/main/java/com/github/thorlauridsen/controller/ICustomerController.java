@@ -1,11 +1,19 @@
 package com.github.thorlauridsen.controller;
 
-import com.github.thorlauridsen.Customer;
+import com.github.thorlauridsen.dto.CustomerDto;
+import com.github.thorlauridsen.dto.CustomerInputDto;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.UUID;
 
 import static com.github.thorlauridsen.controller.Endpoint.CUSTOMER_BASE_ENDPOINT;
 
@@ -14,15 +22,31 @@ import static com.github.thorlauridsen.controller.Endpoint.CUSTOMER_BASE_ENDPOIN
 public interface ICustomerController {
 
     /**
-     * Get method for customer.
-     * This method returns a customer.
+     * Save a customer.
      *
+     * @return ResponseEntity of created customer.
+     */
+    @PostMapping
+    @Operation(
+            summary = "Save a customer",
+            description = "Save a customer"
+    )
+    ResponseEntity<CustomerDto> save(@Valid @RequestBody CustomerInputDto customer);
+
+    /**
+     * Get customer by id.
+     * This method returns a customer given an id.
+     *
+     * @param id UUID of the customer to retrieve.
      * @return ResponseEntity of customer.
      */
-    @GetMapping
+    @GetMapping("/{id}")
     @Operation(
             summary = "Retrieve a customer",
             description = "Retrieve a customer"
     )
-    ResponseEntity<Customer> get();
+    ResponseEntity<CustomerDto> get(
+            @Parameter(description = "UUID of the customer to retrieve", required = true)
+            @PathVariable UUID id
+    );
 }
