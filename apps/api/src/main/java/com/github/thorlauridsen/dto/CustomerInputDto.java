@@ -17,7 +17,7 @@ public record CustomerInputDto(
     /**
      * Converts the DTO to a model.
      *
-     * @return CustomerInput model.
+     * @return {@link CustomerInput} model.
      */
     public CustomerInput toModel() {
         return new CustomerInput(mail());

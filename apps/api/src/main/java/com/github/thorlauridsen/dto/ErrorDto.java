@@ -7,7 +7,7 @@ import java.time.OffsetDateTime;
  * Contains the description of the error and the time it occurred.
  *
  * @param description Description of the error.
- * @param time        Time the error occurred.
+ * @param time        {@link OffsetDateTime} when the error occurred.
  */
 public record ErrorDto(
         String description,

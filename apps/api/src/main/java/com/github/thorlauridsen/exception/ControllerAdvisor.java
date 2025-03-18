@@ -27,7 +27,7 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
      * The returned HTTP status code will be derived from the specific {@link DomainException}.
      *
      * @param exception The domain exception to handle.
-     * @return A response entity with an {@link ErrorDto}
+     * @return A response entity with an {@link ErrorDto}.
      */
     @ExceptionHandler(DomainException.class)
     public ResponseEntity<ErrorDto> handleDomainException(DomainException exception) {
@@ -40,7 +40,7 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
      * Returns an HTTP 500 status code if no domain exception is thrown.
      *
      * @param exception The exception to handle.
-     * @return A response entity with an {@link ErrorDto}
+     * @return A response entity with an {@link ErrorDto}.
      */
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorDto> handleEverything(Exception exception) {
@@ -50,8 +50,8 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
     /**
      * Log exception and return a response entity with an {@link ErrorDto}.
      *
-     * @param exception  {@link Exception}
-     * @param httpStatus {@link HttpStatus}
+     * @param exception  {@link Exception}.
+     * @param httpStatus {@link HttpStatus}.
      */
     private ResponseEntity<ErrorDto> error(Exception exception, HttpStatus httpStatus) {
         var message = exception.getMessage() != null ? exception.getMessage() : "An unexpected error occurred";

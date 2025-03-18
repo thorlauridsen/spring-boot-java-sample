@@ -10,11 +10,11 @@ import java.util.UUID;
 /**
  * Customer repository facade class.
  * <p>
- * This class is a facade for the customer repository.
+ * This class is a facade for the {@link CustomerRepo}.
  * A service class can use this facade to easily interact with the
- * repository without needing to know about the database entity model.
+ * repository without needing to know about the database entity {@link CustomerEntity}.
  * <p>
- * It is annotated with @Repository to allow Spring to automatically
+ * It is annotated with {@link Repository} to allow Spring to automatically
  * detect it as a bean and inject it where needed.
  */
 @Repository
@@ -24,9 +24,9 @@ public class CustomerRepoFacade {
     private final Logger logger = LoggerFactory.getLogger(CustomerRepoFacade.class);
 
     /**
-     * Constructor for customer repository wrapper.
+     * Constructor for customer repository facade.
      *
-     * @param customerRepo Customer repository.
+     * @param customerRepo {@link CustomerRepo}.
      */
     public CustomerRepoFacade(CustomerRepo customerRepo) {
         this.customerRepo = customerRepo;
@@ -34,10 +34,10 @@ public class CustomerRepoFacade {
 
     /**
      * Save a customer.
-     * This will create a new CustomerEntity and save it to the database.
+     * This will create a new {@link CustomerEntity} and save it to the database.
      *
      * @param customerInput Input object for creating a customer.
-     * @return Customer model class.
+     * @return {@link Customer} model class.
      */
     public Customer save(CustomerInput customerInput) {
         logger.info("Saving customer with mail: {}", customerInput.mail());
@@ -54,10 +54,10 @@ public class CustomerRepoFacade {
 
     /**
      * Find a customer by id.
-     * This will handle converting the CustomerEntity to a Customer model.
+     * This method will convert the {@link CustomerEntity} to a {@link Customer} model.
      *
      * @param id UUID of the customer.
-     * @return Optional of customer.
+     * @return {@link Optional} of {@link Customer}.
      */
     public Optional<Customer> findById(UUID id) {
         logger.info("Finding customer with id: {}", id);

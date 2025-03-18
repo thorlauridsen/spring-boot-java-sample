@@ -15,7 +15,7 @@ import static com.github.thorlauridsen.controller.Endpoint.CUSTOMER_BASE_ENDPOIN
 
 /**
  * Customer controller class.
- * This class implements the ICustomerController interface and
+ * This class implements the {@link ICustomerController} interface and
  * overrides the methods defined in the interface with implementations.
  * The controller is responsible for converting data transfer objects to models and vice versa.
  */
@@ -27,7 +27,7 @@ public class CustomerController implements ICustomerController {
     /**
      * Constructor for customer controller.
      *
-     * @param customerService Customer service.
+     * @param customerService {@link CustomerService}.
      */
     public CustomerController(CustomerService customerService) {
         this.customerService = customerService;
@@ -35,11 +35,11 @@ public class CustomerController implements ICustomerController {
 
     /**
      * Save method for customer.
-     * Creates the location for the newly created customer.
-     * Return location and Customer.
+     * Creates the URI location for the newly created customer.
+     * Return URI location and customer.
      *
      * @param customerInput Input object for creating a customer.
-     * @return ResponseEntity of created customer.
+     * @return {@link ResponseEntity} with {@link CustomerDto}.
      */
     @Override
     public ResponseEntity<CustomerDto> save(CustomerInputDto customerInput) {
@@ -55,7 +55,7 @@ public class CustomerController implements ICustomerController {
      *
      * @param id UUID of the customer to retrieve.
      * @throws CustomerNotFoundException if the customer is not found.
-     * @return ResponseEntity of customer.
+     * @return {@link ResponseEntity} with {@link CustomerDto}.
      */
     @Override
     public ResponseEntity<CustomerDto> get(UUID id) throws CustomerNotFoundException {
@@ -67,7 +67,7 @@ public class CustomerController implements ICustomerController {
      * Convert Customer to CustomerDto.
      *
      * @param customer Customer to convert.
-     * @return CustomerDto.
+     * @return {@link CustomerDto}.
      */
     private CustomerDto toDto(Customer customer) {
         return new CustomerDto(customer.id(), customer.mail());

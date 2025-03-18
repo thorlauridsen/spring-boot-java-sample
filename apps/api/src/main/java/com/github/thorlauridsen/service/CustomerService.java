@@ -13,8 +13,8 @@ import java.util.UUID;
 /**
  * Customer service class.
  * <p>
- * It is annotated with @Service to allow Spring to automatically inject it where needed.
- * This class uses the CustomerRepoFacade to interact with the repository.
+ * It is annotated with {@link Service} to allow Spring to automatically inject it where needed.
+ * This class uses the {@link CustomerRepoFacade} to interact with the repository.
  * <p>
  * The service class knows nothing about data transfer objects or database entities.
  * It only knows about the model classes and here you can implement business logic.
@@ -29,7 +29,7 @@ public class CustomerService {
     /**
      * Constructor for customer service.
      *
-     * @param customerRepo Customer repository facade.
+     * @param customerRepo {@link CustomerRepoFacade}.
      */
     public CustomerService(CustomerRepoFacade customerRepo) {
         this.customerRepo = customerRepo;
@@ -38,8 +38,8 @@ public class CustomerService {
     /**
      * Save a customer.
      *
-     * @param customerInput Input object for creating a customer.
-     * @return Customer model class.
+     * @param customerInput {@link CustomerInput} for creating a customer.
+     * @return {@link Customer}.
      */
     public Customer save(CustomerInput customerInput) {
         logger.info("Saving customer with mail: {}", customerInput.mail());
@@ -50,7 +50,7 @@ public class CustomerService {
      * Find a customer by id.
      *
      * @param id UUID of the customer.
-     * @return Optional of customer.
+     * @return {@link Customer}.
      * @throws CustomerNotFoundException if the customer is not found.
      */
     public Customer findById(UUID id) throws CustomerNotFoundException {

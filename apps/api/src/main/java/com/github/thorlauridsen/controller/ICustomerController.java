@@ -31,7 +31,7 @@ public interface ICustomerController {
     /**
      * Save a customer.
      *
-     * @return ResponseEntity of created customer.
+     * @return {@link ResponseEntity} with {@link CustomerDto}.
      */
     @PostMapping
     @Operation(
@@ -46,7 +46,7 @@ public interface ICustomerController {
      *
      * @param id UUID of the customer to retrieve.
      * @throws CustomerNotFoundException if the customer is not found.
-     * @return ResponseEntity of customer.
+     * @return {@link ResponseEntity} with {@link CustomerDto}.
      */
     @GetMapping("/{id}")
     @Operation(
