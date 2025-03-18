@@ -1,5 +1,7 @@
 package com.github.thorlauridsen.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.time.OffsetDateTime;
 
 /**
@@ -10,7 +12,7 @@ import java.time.OffsetDateTime;
  * @param time        {@link OffsetDateTime} when the error occurred.
  */
 public record ErrorDto(
-        String description,
-        OffsetDateTime time
+        @JsonProperty("description") String description,
+        @JsonProperty("time") OffsetDateTime time
 ) {
 }
