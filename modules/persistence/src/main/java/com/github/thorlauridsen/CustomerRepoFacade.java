@@ -1,5 +1,7 @@
 package com.github.thorlauridsen;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -19,6 +21,7 @@ import java.util.UUID;
 public class CustomerRepoFacade {
 
     private final CustomerRepo customerRepo;
+    private final Logger logger = LoggerFactory.getLogger(CustomerRepoFacade.class);
 
     /**
      * Constructor for customer repository wrapper.
@@ -37,8 +40,11 @@ public class CustomerRepoFacade {
      * @return Customer model class.
      */
     public Customer save(CustomerInput customerInput) {
+        logger.info("Saving customer with mail: {}", customerInput.mail());
+
         var customer = new CustomerEntity(customerInput.mail());
         var createdCustomer = customerRepo.save(customer);
+        logger.info("Customer saved with id: {}", createdCustomer.getId());
 
         return new Customer(
                 createdCustomer.getId(),
@@ -54,8 +60,10 @@ public class CustomerRepoFacade {
      * @return Optional of customer.
      */
     public Optional<Customer> findById(UUID id) {
+        logger.info("Finding customer with id: {}", id);
         var customer = customerRepo.findById(id);
 
+        logger.info("Found customer with id: {}", id);
         return customer.map(customerEntity -> new Customer(
                 customerEntity.getId(),
                 customerEntity.getMail()
