@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.thorlauridsen.dto.CustomerDto;
 import com.github.thorlauridsen.dto.CustomerInputDto;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.web.servlet.MockMvc;
@@ -30,23 +32,27 @@ public class CustomerControllerTest extends BaseMockMvc {
         assertEquals(HttpStatus.NOT_FOUND.value(), response.getStatus());
     }
 
-    @Test
-    public void postCustomer_getCustomer_success() throws Exception {
-        var customer = new CustomerInputDto("bob@gmail.com");
+    @ParameterizedTest
+    @ValueSource(strings = {
+            "alice@gmail.com",
+            "bob@gmail.com"
+    })
+    public void postCustomer_getCustomer_success(String mail) throws Exception {
+        var customer = new CustomerInputDto(mail);
         var json = objectMapper.writeValueAsString(customer);
         var response = mockPost(json, CUSTOMER_BASE_ENDPOINT);
         assertEquals(HttpStatus.CREATED.value(), response.getStatus());
 
         var responseJson = response.getContentAsString();
         var createdCustomer = objectMapper.readValue(responseJson, CustomerDto.class);
-        assertCustomer(createdCustomer, "bob@gmail.com");
+        assertCustomer(createdCustomer, mail);
 
         var response2 = mockGet(CUSTOMER_BASE_ENDPOINT + "/" + createdCustomer.id());
         assertEquals(HttpStatus.OK.value(), response2.getStatus());
 
         var responseJson2 = response2.getContentAsString();
         var fetchedCustomer = objectMapper.readValue(responseJson2, CustomerDto.class);
-        assertCustomer(fetchedCustomer, "bob@gmail.com");
+        assertCustomer(fetchedCustomer, mail);
     }
 
     /**

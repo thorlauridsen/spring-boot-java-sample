@@ -3,6 +3,8 @@ package com.github.thorlauridsen;
 import com.github.thorlauridsen.exception.CustomerNotFoundException;
 import com.github.thorlauridsen.service.CustomerService;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -29,15 +31,19 @@ public class CustomerServiceTest {
         assertThrows(CustomerNotFoundException.class, () -> customerService.findById(id));
     }
 
-    @Test
-    public void saveCustomerAndGetCustomerSuccess() throws CustomerNotFoundException {
-        var customer = new CustomerInput("bob@gmail.com");
+    @ParameterizedTest
+    @ValueSource(strings = {
+            "alice@gmail.com",
+            "bob@gmail.com"
+    })
+    public void saveCustomerAndGetCustomerSuccess(String mail) throws CustomerNotFoundException {
+        var customer = new CustomerInput(mail);
 
         var savedCustomer = customerService.save(customer);
-        assertCustomer(savedCustomer, "bob@gmail.com");
+        assertCustomer(savedCustomer, mail);
 
         var fetchedCustomer = customerService.findById(savedCustomer.id());
-        assertCustomer(fetchedCustomer, "bob@gmail.com");
+        assertCustomer(fetchedCustomer, mail);
     }
 
     /**
