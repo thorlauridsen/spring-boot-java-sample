@@ -1,6 +1,6 @@
 [versions]
-junitPlatformLauncher = "1.11.4"
 h2database = "2.3.232"
+junitPlatformLauncher = "1.11.4"
 liquibase = "4.31.1"
 springboot = "3.4.3"
 springDependencyPlugin = "1.1.6"
@@ -8,11 +8,11 @@ springdoc = "2.8.5"
 
 [libraries]
 
-# JUnit platform launcher for running JUnit tests
-junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher", version.ref = "junitPlatformLauncher" }
-
 # H2 for in-memory database
 h2database = { module = "com.h2database:h2", version.ref = "h2database" }
+
+# JUnit platform launcher for running JUnit tests
+junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher", version.ref = "junitPlatformLauncher" }
 
 # Liquibase for managing database changelogs
 liquibase-core = { module = "org.liquibase:liquibase-core", version.ref = "liquibase" }
