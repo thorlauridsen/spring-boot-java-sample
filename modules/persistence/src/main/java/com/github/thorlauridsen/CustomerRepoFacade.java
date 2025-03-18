@@ -6,17 +6,17 @@ import java.util.Optional;
 import java.util.UUID;
 
 /**
- * Customer repository wrapper class.
+ * Customer repository facade class.
  * <p>
- * This class is a wrapper for the customer repository.
- * A service class can use this wrapper to interact with the
+ * This class is a facade for the customer repository.
+ * A service class can use this facade to easily interact with the
  * repository without needing to know about the entity model.
  * <p>
  * It is annotated with @Repository to allow Spring to automatically
  * detect it as a bean and inject it where needed.
  */
 @Repository
-public class CustomerRepoWrapper {
+public class CustomerRepoFacade {
 
     private final CustomerRepo customerRepo;
 
@@ -25,7 +25,7 @@ public class CustomerRepoWrapper {
      *
      * @param customerRepo Customer repository.
      */
-    public CustomerRepoWrapper(CustomerRepo customerRepo) {
+    public CustomerRepoFacade(CustomerRepo customerRepo) {
         this.customerRepo = customerRepo;
     }
 
@@ -41,8 +41,8 @@ public class CustomerRepoWrapper {
         CustomerEntity createdCustomer = customerRepo.save(customer);
 
         return new Customer(
-            createdCustomer.getId(),
-            createdCustomer.getMail()
+                createdCustomer.getId(),
+                createdCustomer.getMail()
         );
     }
 
