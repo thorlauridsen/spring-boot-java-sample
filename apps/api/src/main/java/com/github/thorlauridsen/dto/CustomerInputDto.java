@@ -2,6 +2,7 @@ package com.github.thorlauridsen.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.thorlauridsen.CustomerInput;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * Data transfer object for creating a customer.
@@ -10,6 +11,14 @@ import com.github.thorlauridsen.CustomerInput;
  *
  * @param mail Mail as string of the customer.
  */
+@Schema(
+        description = "Data transfer object for creating a new customer",
+        example = """
+                {
+                    "mail": "bob@gmail.com"
+                }
+                """
+)
 public record CustomerInputDto(
         @JsonProperty("mail") String mail
 ) {

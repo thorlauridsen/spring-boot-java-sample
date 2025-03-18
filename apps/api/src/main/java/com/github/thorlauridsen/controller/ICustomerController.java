@@ -2,9 +2,13 @@ package com.github.thorlauridsen.controller;
 
 import com.github.thorlauridsen.dto.CustomerDto;
 import com.github.thorlauridsen.dto.CustomerInputDto;
+import com.github.thorlauridsen.dto.ErrorDto;
 import com.github.thorlauridsen.exception.CustomerNotFoundException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -38,6 +42,10 @@ public interface ICustomerController {
             summary = "Save a customer",
             description = "Save a customer"
     )
+    @ApiResponse(
+            responseCode = "201",
+            description = "Customer successfully created"
+    )
     ResponseEntity<CustomerDto> save(@Valid @RequestBody CustomerInputDto customer);
 
     /**
@@ -45,13 +53,22 @@ public interface ICustomerController {
      * This method returns a customer given an id.
      *
      * @param id UUID of the customer to retrieve.
-     * @throws CustomerNotFoundException if the customer is not found.
      * @return {@link ResponseEntity} with {@link CustomerDto}.
+     * @throws CustomerNotFoundException if the customer is not found.
      */
     @GetMapping("/{id}")
     @Operation(
             summary = "Retrieve a customer",
             description = "Retrieve a customer"
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "Successfully retrieved customer"
+    )
+    @ApiResponse(
+            responseCode = "404",
+            description = "Customer not found with given id",
+            content = @Content(schema = @Schema(implementation = ErrorDto.class))
     )
     ResponseEntity<CustomerDto> get(
             @Parameter(description = "UUID of the customer to retrieve", required = true)
