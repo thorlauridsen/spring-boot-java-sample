@@ -23,7 +23,7 @@ to view the Swagger documentation.
 - [JDK21](https://openjdk.org/projects/jdk/21/) - Latest JDK with long-term support
 - [Gradle](https://github.com/gradle/gradle) - Used for compilation, building, testing and dependency management
 - [Spring Boot (Web MVC)](https://github.com/spring-projects/spring-boot) - For creating REST APIs
-- [SpringDoc](https://github.com/springdoc/springdoc-openapi) - Provides Swagger documentation for REST APIs
+- [Springdoc](https://github.com/springdoc/springdoc-openapi) - Provides Swagger documentation for REST APIs
 - [Spring Data JPA](https://docs.spring.io/spring-data/jpa/reference/index.html) - Repository support for JPA
 - [H2database](https://github.com/h2database/h2database) - Provides an in-memory database for simple local testing
 - [Liquibase](https://github.com/liquibase/liquibase) - Used to manage database schema changelogs
