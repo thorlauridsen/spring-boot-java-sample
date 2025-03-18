@@ -54,8 +54,8 @@ public class CustomerController implements ICustomerController {
      * This method returns a customer.
      *
      * @param id UUID of the customer to retrieve.
-     * @throws CustomerNotFoundException if the customer is not found.
      * @return {@link ResponseEntity} with {@link CustomerDto}.
+     * @throws CustomerNotFoundException if the customer is not found.
      */
     @Override
     public ResponseEntity<CustomerDto> get(UUID id) throws CustomerNotFoundException {
