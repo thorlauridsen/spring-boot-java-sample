@@ -10,7 +10,7 @@ import java.util.UUID;
  * <p>
  * This class is a facade for the customer repository.
  * A service class can use this facade to easily interact with the
- * repository without needing to know about the entity model.
+ * repository without needing to know about the database entity model.
  * <p>
  * It is annotated with @Repository to allow Spring to automatically
  * detect it as a bean and inject it where needed.

@@ -7,6 +7,7 @@ import java.util.UUID;
 
 /**
  * Data transfer object for customer.
+ * This is created to ensure that FasterXML Jackson can serialize and deserialize customers.
  * Represents a customer with an id and an email.
  * This class has final fields for immutability.
  */

@@ -10,9 +10,13 @@ import java.util.UUID;
 
 /**
  * Customer service class.
+ * <p>
  * It is annotated with @Service to allow Spring to automatically inject it where needed.
  * This class uses the CustomerRepoFacade to interact with the repository.
- * Business logic can be implemented here if necessary.
+ * <p>
+ * The service class knows nothing about data transfer objects or database entities.
+ * It only knows about the model classes and here you can implement business logic.
+ * The idea here is to keep the various layers separated.
  */
 @Service
 public class CustomerService {

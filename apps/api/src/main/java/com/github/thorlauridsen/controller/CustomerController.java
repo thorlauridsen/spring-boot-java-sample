@@ -14,7 +14,9 @@ import static com.github.thorlauridsen.controller.Endpoint.CUSTOMER_BASE_ENDPOIN
 
 /**
  * Customer controller class.
- * This class is a controller for the customer model.
+ * This class implements the ICustomerController interface and
+ * overrides the methods defined in the interface with implementations.
+ * The controller is responsible for converting data transfer objects to models and vice versa.
  */
 @Controller
 public class CustomerController implements ICustomerController {

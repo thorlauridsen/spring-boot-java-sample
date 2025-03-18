@@ -6,6 +6,7 @@ import com.github.thorlauridsen.CustomerInput;
 
 /**
  * Data transfer object for creating a customer.
+ * This is created to ensure that FasterXML Jackson can serialize and deserialize customers.
  * Contains all the fields for creating a customer.
  * This class has final fields for immutability.
  */
