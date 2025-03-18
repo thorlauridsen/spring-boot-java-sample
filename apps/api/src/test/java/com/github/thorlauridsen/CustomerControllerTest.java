@@ -25,27 +25,27 @@ public class CustomerControllerTest extends BaseMockMvc {
 
     @Test
     public void getCustomer_randomId_returnsNotFound() throws Exception {
-        UUID id = UUID.randomUUID();
+        var id = UUID.randomUUID();
         var response = mockGet(CUSTOMER_BASE_ENDPOINT + "/" + id);
         assertEquals(HttpStatus.NOT_FOUND.value(), response.getStatus());
     }
 
     @Test
     public void postCustomer_getCustomer_success() throws Exception {
-        CustomerInputDto customer = new CustomerInputDto("bob@gmail.com");
-        String json = objectMapper.writeValueAsString(customer);
+        var customer = new CustomerInputDto("bob@gmail.com");
+        var json = objectMapper.writeValueAsString(customer);
         var response = mockPost(json, CUSTOMER_BASE_ENDPOINT);
         assertEquals(HttpStatus.CREATED.value(), response.getStatus());
 
-        String responseJson = response.getContentAsString();
-        CustomerDto createdCustomer = objectMapper.readValue(responseJson, CustomerDto.class);
+        var responseJson = response.getContentAsString();
+        var createdCustomer = objectMapper.readValue(responseJson, CustomerDto.class);
         assertCustomer(createdCustomer, "bob@gmail.com");
 
         var response2 = mockGet(CUSTOMER_BASE_ENDPOINT + "/" + createdCustomer.id());
         assertEquals(HttpStatus.OK.value(), response2.getStatus());
 
-        String responseJson2 = response2.getContentAsString();
-        CustomerDto fetchedCustomer = objectMapper.readValue(responseJson2, CustomerDto.class);
+        var responseJson2 = response2.getContentAsString();
+        var fetchedCustomer = objectMapper.readValue(responseJson2, CustomerDto.class);
         assertCustomer(fetchedCustomer, "bob@gmail.com");
     }
 

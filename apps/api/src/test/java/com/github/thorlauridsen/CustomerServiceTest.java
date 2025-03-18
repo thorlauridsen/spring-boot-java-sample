@@ -25,18 +25,18 @@ public class CustomerServiceTest {
 
     @Test
     public void getCustomerWithRandomIdReturnsNotFound() {
-        UUID id = UUID.randomUUID();
+        var id = UUID.randomUUID();
         assertThrows(CustomerNotFoundException.class, () -> customerService.findById(id));
     }
 
     @Test
     public void saveCustomerAndGetCustomerSuccess() throws CustomerNotFoundException {
-        CustomerInput customer = new CustomerInput("bob@gmail.com");
+        var customer = new CustomerInput("bob@gmail.com");
 
-        Customer savedCustomer = customerService.save(customer);
+        var savedCustomer = customerService.save(customer);
         assertCustomer(savedCustomer, "bob@gmail.com");
 
-        Customer fetchedCustomer = customerService.findById(savedCustomer.id());
+        var fetchedCustomer = customerService.findById(savedCustomer.id());
         assertCustomer(fetchedCustomer, "bob@gmail.com");
     }
 
