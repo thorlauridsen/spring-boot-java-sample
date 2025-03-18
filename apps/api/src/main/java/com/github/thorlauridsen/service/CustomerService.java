@@ -3,9 +3,10 @@ package com.github.thorlauridsen.service;
 import com.github.thorlauridsen.Customer;
 import com.github.thorlauridsen.CustomerInput;
 import com.github.thorlauridsen.CustomerRepoFacade;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -22,6 +23,7 @@ import java.util.UUID;
 public class CustomerService {
 
     private final CustomerRepoFacade customerRepo;
+    private final Logger logger = LoggerFactory.getLogger(CustomerService.class);
 
     /**
      * Constructor for customer service.
@@ -39,6 +41,7 @@ public class CustomerService {
      * @return Customer model class.
      */
     public Customer save(CustomerInput customerInput) {
+        logger.info("Saving customer with mail: {}", customerInput.mail());
         return customerRepo.save(customerInput);
     }
 
@@ -49,10 +52,13 @@ public class CustomerService {
      * @return Optional of customer.
      */
     public Customer findById(UUID id) {
+        logger.info("Finding customer with id: {}", id);
+
         var customer = customerRepo.findById(id);
         if (customer.isEmpty()) {
             throw new IllegalArgumentException("Customer not found");
         }
+        logger.info("Found customer: {}", customer);
         return customer.get();
     }
 }
