@@ -3,6 +3,7 @@ package com.github.thorlauridsen.service;
 import com.github.thorlauridsen.Customer;
 import com.github.thorlauridsen.CustomerInput;
 import com.github.thorlauridsen.CustomerRepoFacade;
+import com.github.thorlauridsen.exception.CustomerNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -50,13 +51,14 @@ public class CustomerService {
      *
      * @param id UUID of the customer.
      * @return Optional of customer.
+     * @throws CustomerNotFoundException if the customer is not found.
      */
-    public Customer findById(UUID id) {
+    public Customer findById(UUID id) throws CustomerNotFoundException {
         logger.info("Finding customer with id: {}", id);
 
         var customer = customerRepo.findById(id);
         if (customer.isEmpty()) {
-            throw new IllegalArgumentException("Customer not found");
+            throw new CustomerNotFoundException("Customer not found with id: " + id);
         }
         logger.info("Found customer: {}", customer);
         return customer.get();
