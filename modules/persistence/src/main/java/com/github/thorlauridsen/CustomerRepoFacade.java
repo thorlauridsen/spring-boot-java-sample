@@ -37,7 +37,7 @@ public class CustomerRepoFacade {
      * @return Customer model class.
      */
     public Customer save(CustomerInput customerInput) {
-        CustomerEntity customer = new CustomerEntity(customerInput.getMail());
+        CustomerEntity customer = new CustomerEntity(customerInput.mail());
         CustomerEntity createdCustomer = customerRepo.save(customer);
 
         return new Customer(

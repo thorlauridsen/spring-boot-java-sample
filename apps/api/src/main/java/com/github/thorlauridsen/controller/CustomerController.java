@@ -43,7 +43,7 @@ public class CustomerController implements ICustomerController {
     @Override
     public ResponseEntity<CustomerDto> save(CustomerInputDto customerInput) {
         Customer customer = customerService.save(customerInput.toModel());
-        URI location = URI.create(CUSTOMER_BASE_ENDPOINT + "/" + customer.getId());
+        URI location = URI.create(CUSTOMER_BASE_ENDPOINT + "/" + customer.id());
 
         return ResponseEntity.created(location).body(toDto(customer));
     }
@@ -67,6 +67,6 @@ public class CustomerController implements ICustomerController {
      * @return CustomerDto.
      */
     private CustomerDto toDto(Customer customer) {
-        return new CustomerDto(customer.getId(), customer.getMail());
+        return new CustomerDto(customer.id(), customer.mail());
     }
 }
