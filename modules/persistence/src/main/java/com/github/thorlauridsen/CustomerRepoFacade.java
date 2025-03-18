@@ -37,8 +37,8 @@ public class CustomerRepoFacade {
      * @return Customer model class.
      */
     public Customer save(CustomerInput customerInput) {
-        CustomerEntity customer = new CustomerEntity(customerInput.mail());
-        CustomerEntity createdCustomer = customerRepo.save(customer);
+        var customer = new CustomerEntity(customerInput.mail());
+        var createdCustomer = customerRepo.save(customer);
 
         return new Customer(
                 createdCustomer.getId(),
@@ -54,7 +54,7 @@ public class CustomerRepoFacade {
      * @return Optional of customer.
      */
     public Optional<Customer> findById(UUID id) {
-        Optional<CustomerEntity> customer = customerRepo.findById(id);
+        var customer = customerRepo.findById(id);
 
         return customer.map(customerEntity -> new Customer(
                 customerEntity.getId(),

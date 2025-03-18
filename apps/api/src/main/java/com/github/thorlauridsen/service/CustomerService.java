@@ -49,7 +49,7 @@ public class CustomerService {
      * @return Optional of customer.
      */
     public Customer findById(UUID id) {
-        Optional<Customer> customer = customerRepo.findById(id);
+        var customer = customerRepo.findById(id);
         if (customer.isEmpty()) {
             throw new IllegalArgumentException("Customer not found");
         }
