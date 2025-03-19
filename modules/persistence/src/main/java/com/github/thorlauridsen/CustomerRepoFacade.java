@@ -21,7 +21,7 @@ import java.util.UUID;
 public class CustomerRepoFacade {
 
     private final CustomerRepo customerRepo;
-    private final Logger logger = LoggerFactory.getLogger(CustomerRepoFacade.class);
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /**
      * Constructor for customer repository facade.

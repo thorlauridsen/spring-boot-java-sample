@@ -18,7 +18,7 @@ import java.time.OffsetDateTime;
 @ControllerAdvice
 public class ControllerAdvisor extends ResponseEntityExceptionHandler {
 
-    private final Logger logger = LoggerFactory.getLogger(ControllerAdvisor.class);
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /**
      * Handles all domain exceptions.
