@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.UUID;
 
-import static com.github.thorlauridsen.controller.Endpoint.CUSTOMER_BASE_ENDPOINT;
+import static com.github.thorlauridsen.controller.BaseEndpoint.CUSTOMER_BASE_ENDPOINT;
 
 /**
  * Customer controller interface.
