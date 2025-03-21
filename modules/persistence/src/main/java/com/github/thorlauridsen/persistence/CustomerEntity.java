@@ -24,7 +24,7 @@ public class CustomerEntity {
     private String mail;
 
     /**
-     * Default constructor (required by JPA)
+     * Empty default constructor required by JPA.
      */
     protected CustomerEntity() {
     }
