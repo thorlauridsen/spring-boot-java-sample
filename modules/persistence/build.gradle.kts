@@ -11,7 +11,6 @@ dependencies {
     implementation(projects.model)
 
     // Spring Boot dependencies
-    implementation(local.springboot.starter)
     implementation(local.springboot.starter.jpa)
 }
 
