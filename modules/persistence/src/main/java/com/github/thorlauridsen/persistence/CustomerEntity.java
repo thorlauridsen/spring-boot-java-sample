@@ -1,4 +1,4 @@
-package com.github.thorlauridsen;
+package com.github.thorlauridsen.persistence;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

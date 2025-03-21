@@ -1,6 +1,6 @@
 package com.github.thorlauridsen.controller;
 
-import com.github.thorlauridsen.Customer;
+import com.github.thorlauridsen.model.Customer;
 import com.github.thorlauridsen.dto.CustomerDto;
 import com.github.thorlauridsen.dto.CustomerInputDto;
 import com.github.thorlauridsen.exception.CustomerNotFoundException;

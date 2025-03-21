@@ -1,8 +1,8 @@
 package com.github.thorlauridsen.service;
 
-import com.github.thorlauridsen.Customer;
-import com.github.thorlauridsen.CustomerInput;
-import com.github.thorlauridsen.CustomerRepoFacade;
+import com.github.thorlauridsen.model.Customer;
+import com.github.thorlauridsen.model.CustomerInput;
+import com.github.thorlauridsen.persistence.CustomerRepoFacade;
 import com.github.thorlauridsen.exception.CustomerNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
