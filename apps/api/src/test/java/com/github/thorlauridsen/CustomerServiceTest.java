@@ -1,5 +1,8 @@
 package com.github.thorlauridsen;
 
+import com.github.thorlauridsen.model.Customer;
+import com.github.thorlauridsen.model.CustomerInput;
+import com.github.thorlauridsen.persistence.CustomerRepo;
 import com.github.thorlauridsen.exception.CustomerNotFoundException;
 import com.github.thorlauridsen.service.CustomerService;
 import org.junit.jupiter.api.Test;

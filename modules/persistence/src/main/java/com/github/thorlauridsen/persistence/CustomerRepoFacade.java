@@ -1,5 +1,7 @@
-package com.github.thorlauridsen;
+package com.github.thorlauridsen.persistence;
 
+import com.github.thorlauridsen.model.Customer;
+import com.github.thorlauridsen.model.CustomerInput;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
