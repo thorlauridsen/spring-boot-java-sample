@@ -1,15 +1,13 @@
 package com.github.thorlauridsen.controller;
 
-import com.github.thorlauridsen.model.Customer;
 import com.github.thorlauridsen.dto.CustomerDto;
 import com.github.thorlauridsen.dto.CustomerInputDto;
 import com.github.thorlauridsen.exception.CustomerNotFoundException;
 import com.github.thorlauridsen.service.CustomerService;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-
 import java.net.URI;
 import java.util.UUID;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 
 import static com.github.thorlauridsen.controller.BaseEndpoint.CUSTOMER_BASE_ENDPOINT;
 
@@ -46,12 +44,12 @@ public class CustomerController implements ICustomerController {
         var customer = customerService.save(customerInput.toModel());
         var location = URI.create(CUSTOMER_BASE_ENDPOINT + "/" + customer.id());
 
-        return ResponseEntity.created(location).body(toDto(customer));
+        return ResponseEntity.created(location).body(CustomerDto.fromModel(customer));
     }
 
     /**
      * Get method for customer.
-     * This method returns a customer.
+     * This method will convert the model to a DTO and return it.
      *
      * @param id UUID of the customer to retrieve.
      * @return {@link ResponseEntity} with {@link CustomerDto}.
@@ -60,16 +58,6 @@ public class CustomerController implements ICustomerController {
     @Override
     public ResponseEntity<CustomerDto> get(UUID id) throws CustomerNotFoundException {
         var customer = customerService.findById(id);
-        return ResponseEntity.ok(toDto(customer));
-    }
-
-    /**
-     * Convert Customer to CustomerDto.
-     *
-     * @param customer Customer to convert.
-     * @return {@link CustomerDto}.
-     */
-    private CustomerDto toDto(Customer customer) {
-        return new CustomerDto(customer.id(), customer.mail());
+        return ResponseEntity.ok(CustomerDto.fromModel(customer));
     }
 }

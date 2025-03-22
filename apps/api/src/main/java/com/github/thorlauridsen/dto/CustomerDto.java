@@ -1,6 +1,7 @@
 package com.github.thorlauridsen.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.github.thorlauridsen.model.Customer;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.UUID;
@@ -26,4 +27,14 @@ public record CustomerDto(
         @JsonProperty("id") UUID id,
         @JsonProperty("mail") String mail
 ) {
+
+    /**
+     * Static method to convert an {@link Customer} model to an {@link CustomerDto}.
+     *
+     * @param customer {@link Customer} to convert.
+     * @return {@link CustomerDto}.
+     */
+    public static CustomerDto fromModel(Customer customer) {
+        return new CustomerDto(customer.id(), customer.mail());
+    }
 }
