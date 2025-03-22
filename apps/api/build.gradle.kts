@@ -18,6 +18,9 @@ dependencies {
 	// Liquibase core dependency for database migrations
 	runtimeOnly(local.liquibase.core)
 
+	// PostgreSQL database driver
+	runtimeOnly(local.postgres)
+
 	// Springdoc OpenAPI for providing Swagger documentation
 	implementation(local.springdoc.openapi.starter.webmvc)
 

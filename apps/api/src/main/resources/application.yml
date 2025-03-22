@@ -1,6 +1,8 @@
 spring:
-  application:
-    name: sample
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1}
+    username: ${SPRING_DATASOURCE_USERNAME:sa}
+    password: ${SPRING_DATASOURCE_PASSWORD:}
 springdoc:
   api-docs:
     enabled: true
