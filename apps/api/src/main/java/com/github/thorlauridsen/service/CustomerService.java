@@ -1,20 +1,19 @@
 package com.github.thorlauridsen.service;
 
+import com.github.thorlauridsen.exception.CustomerNotFoundException;
 import com.github.thorlauridsen.model.Customer;
 import com.github.thorlauridsen.model.CustomerInput;
-import com.github.thorlauridsen.persistence.CustomerRepoFacade;
-import com.github.thorlauridsen.exception.CustomerNotFoundException;
+import com.github.thorlauridsen.persistence.ICustomerRepo;
+import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-
-import java.util.UUID;
 
 /**
  * Customer service class.
  * <p>
  * It is annotated with {@link Service} to allow Spring to automatically inject it where needed.
- * This class uses the {@link CustomerRepoFacade} to interact with the repository.
+ * This class uses the {@link ICustomerRepo} to interact with the repository.
  * <p>
  * The service class knows nothing about data transfer objects or database entities.
  * It only knows about the model classes and here you can implement business logic.
@@ -23,15 +22,15 @@ import java.util.UUID;
 @Service
 public class CustomerService {
 
-    private final CustomerRepoFacade customerRepo;
+    private final ICustomerRepo customerRepo;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /**
      * Constructor for customer service.
      *
-     * @param customerRepo {@link CustomerRepoFacade}.
+     * @param customerRepo {@link ICustomerRepo} for interacting with the database.
      */
-    public CustomerService(CustomerRepoFacade customerRepo) {
+    public CustomerService(ICustomerRepo customerRepo) {
         this.customerRepo = customerRepo;
     }
 
