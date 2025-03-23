@@ -1,17 +1,16 @@
 package com.github.thorlauridsen;
 
+import com.github.thorlauridsen.exception.CustomerNotFoundException;
 import com.github.thorlauridsen.model.Customer;
 import com.github.thorlauridsen.model.CustomerInput;
 import com.github.thorlauridsen.persistence.CustomerRepo;
-import com.github.thorlauridsen.exception.CustomerNotFoundException;
 import com.github.thorlauridsen.service.CustomerService;
+import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;

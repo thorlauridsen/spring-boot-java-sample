@@ -3,14 +3,13 @@ package com.github.thorlauridsen;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.thorlauridsen.dto.CustomerDto;
 import com.github.thorlauridsen.dto.CustomerInputDto;
+import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.web.servlet.MockMvc;
-
-import java.util.UUID;
 
 import static com.github.thorlauridsen.controller.BaseEndpoint.CUSTOMER_BASE_ENDPOINT;
 import static org.junit.jupiter.api.Assertions.assertEquals;
