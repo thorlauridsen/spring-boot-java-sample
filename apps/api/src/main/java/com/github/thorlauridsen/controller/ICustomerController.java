@@ -48,8 +48,7 @@ public interface ICustomerController {
     ResponseEntity<CustomerDto> save(@Valid @RequestBody CustomerInputDto customer);
 
     /**
-     * Get customer by id.
-     * This method returns a customer given an id.
+     * Get customer given an id.
      *
      * @param id UUID of the customer to retrieve.
      * @return {@link ResponseEntity} with {@link CustomerDto}.
