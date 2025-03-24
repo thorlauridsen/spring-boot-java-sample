@@ -23,7 +23,7 @@ public class CustomerController implements ICustomerController {
     private final CustomerService customerService;
 
     /**
-     * Constructor for customer controller.
+     * Constructor for CustomerController.
      *
      * @param customerService {@link CustomerService}.
      */
@@ -37,7 +37,7 @@ public class CustomerController implements ICustomerController {
      * Return URI location and customer.
      *
      * @param customerInput Input object for creating a customer.
-     * @return {@link ResponseEntity} with {@link CustomerDto}.
+     * @return {@link ResponseEntity} with URI location and {@link CustomerDto}.
      */
     @Override
     public ResponseEntity<CustomerDto> save(CustomerInputDto customerInput) {
@@ -48,7 +48,7 @@ public class CustomerController implements ICustomerController {
     }
 
     /**
-     * Get method for customer.
+     * Get customer given an id.
      * This method will convert the model to a DTO and return it.
      *
      * @param id UUID of the customer to retrieve.
