@@ -59,7 +59,7 @@ public class CustomerService {
         if (customer.isEmpty()) {
             throw new CustomerNotFoundException("Customer not found with id: " + id);
         }
-        logger.info("Found customer: {}", customer);
+        logger.info("Found customer with id: {}", id);
         return customer.get();
     }
 }
