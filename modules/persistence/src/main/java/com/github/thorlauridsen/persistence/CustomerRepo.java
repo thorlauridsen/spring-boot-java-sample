@@ -67,7 +67,12 @@ public class CustomerRepo implements ICustomerRepo {
         logger.info("Finding customer with id: {}", id);
         var customer = jpaRepo.findById(id);
 
-        logger.info("Found customer with id: {}", id);
+        if (customer.isPresent()) {
+            logger.info("Found customer with id: {}", id);
+        } else {
+            logger.info("Customer not found with id: {}", id);
+        }
+
         return customer.map(customerEntity -> new Customer(
                 customerEntity.getId(),
                 customerEntity.getMail()
