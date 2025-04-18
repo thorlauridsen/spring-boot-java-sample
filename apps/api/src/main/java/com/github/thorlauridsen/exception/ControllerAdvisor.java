@@ -92,7 +92,7 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
         var message = exception.getMessage() != null ? exception.getMessage() : "An unexpected error occurred";
         var errorDto = new ErrorDto(message, OffsetDateTime.now(), new HashMap<>());
 
-        logger.error(exception.getMessage(), exception);
+        logger.error(message, exception);
         return ResponseEntity.status(httpStatus).body(errorDto);
     }
 }
