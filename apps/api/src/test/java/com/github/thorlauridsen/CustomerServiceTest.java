@@ -49,7 +49,7 @@ public class CustomerServiceTest {
     }
 
     /**
-     * Ensure that customer is not null and that the id is not null.
+     * Ensure that the customer is not null and that the id is not null.
      * Assert that the mail is equal to the expected mail.
      *
      * @param customer     {@link Customer}
