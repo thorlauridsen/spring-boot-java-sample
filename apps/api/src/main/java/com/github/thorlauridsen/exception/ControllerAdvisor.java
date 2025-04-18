@@ -2,12 +2,21 @@ package com.github.thorlauridsen.exception;
 
 import com.github.thorlauridsen.dto.ErrorDto;
 import java.time.OffsetDateTime;
+import java.util.HashMap;
+import java.util.stream.Collectors;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 /**
@@ -46,6 +55,33 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
         return error(exception, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    @Override
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(
+            MethodArgumentNotValidException exception,
+            @NonNull HttpHeaders headers,
+            @NonNull HttpStatusCode status,
+            @NonNull WebRequest request
+    ) {
+        var fieldErrors = exception.getBindingResult()
+                .getFieldErrors()
+                .stream()
+                .collect(Collectors.toMap(
+                        FieldError::getField,
+                        fe -> fe.getDefaultMessage() != null ? fe.getDefaultMessage() : "Invalid value"
+                ));
+
+        var errorDto = new ErrorDto(
+                "Validation failed",
+                OffsetDateTime.now(),
+                fieldErrors
+        );
+
+        logger.error("Validation failed: {}", fieldErrors, exception);
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(errorDto);
+    }
+
     /**
      * Log exception and return a response entity with an {@link ErrorDto}.
      *
@@ -54,7 +90,7 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
      */
     private ResponseEntity<ErrorDto> error(Exception exception, HttpStatus httpStatus) {
         var message = exception.getMessage() != null ? exception.getMessage() : "An unexpected error occurred";
-        var errorDto = new ErrorDto(message, OffsetDateTime.now());
+        var errorDto = new ErrorDto(message, OffsetDateTime.now(), new HashMap<>());
 
         logger.error(exception.getMessage(), exception);
         return ResponseEntity.status(httpStatus).body(errorDto);

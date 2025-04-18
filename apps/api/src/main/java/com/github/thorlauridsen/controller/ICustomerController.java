@@ -11,7 +11,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import java.util.UUID;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,15 +18,20 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.UUID;
+
 import static com.github.thorlauridsen.controller.BaseEndpoint.CUSTOMER_BASE_ENDPOINT;
 
 /**
  * Customer controller interface.
  * This interface defines the endpoints for the customer controller.
  * It also defines the operations which will be used in the OpenAPI documentation.
- * The purpose with this interface is to separate the controller definition from the implementation.
+ * The purpose of this interface is to separate the controller definition from the implementation.
  */
-@Tag(name = "Customer Controller", description = "API for managing customers")
+@Tag(
+        name = "Customer Controller",
+        description = "API for managing customers"
+)
 @RequestMapping(CUSTOMER_BASE_ENDPOINT)
 public interface ICustomerController {
 
@@ -38,8 +42,8 @@ public interface ICustomerController {
      */
     @PostMapping
     @Operation(
-            summary = "Save a customer",
-            description = "Save a customer"
+            summary = "Create a new customer",
+            description = "Creates a new customer with the provided email address."
     )
     @ApiResponse(
             responseCode = "201",
@@ -48,7 +52,7 @@ public interface ICustomerController {
     ResponseEntity<CustomerDto> save(@Valid @RequestBody CustomerInputDto customer);
 
     /**
-     * Get customer given an id.
+     * Retrieve a customer by ID.
      *
      * @param id UUID of the customer to retrieve.
      * @return {@link ResponseEntity} with {@link CustomerDto}.
@@ -56,8 +60,8 @@ public interface ICustomerController {
      */
     @GetMapping("/{id}")
     @Operation(
-            summary = "Retrieve a customer",
-            description = "Retrieve a customer"
+            summary = "Retrieve a customer by ID",
+            description = "Retrieve a customer by ID"
     )
     @ApiResponse(
             responseCode = "200",

@@ -3,6 +3,8 @@ package com.github.thorlauridsen.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.thorlauridsen.model.CustomerInput;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 
 /**
  * Data transfer object for creating a customer.
@@ -20,7 +22,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
                 """
 )
 public record CustomerInputDto(
-        @JsonProperty("mail") String mail
+        @NotBlank(message = "Email is required")
+        @Email(message = "Invalid email format")
+        @JsonProperty("mail")
+        String mail
 ) {
 
     /**

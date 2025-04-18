@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.thorlauridsen.dto.CustomerDto;
 import com.github.thorlauridsen.dto.CustomerInputDto;
 import java.util.UUID;
+
+import com.github.thorlauridsen.dto.ErrorDto;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -14,10 +16,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import static com.github.thorlauridsen.controller.BaseEndpoint.CUSTOMER_BASE_ENDPOINT;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CustomerControllerTest extends BaseMockMvc {
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @Autowired
     public CustomerControllerTest(MockMvc mockMvc) {
@@ -54,8 +58,40 @@ public class CustomerControllerTest extends BaseMockMvc {
         assertCustomer(fetchedCustomer, mail);
     }
 
+    @Test
+    void postCustomer_blankEmail_returnsBadRequest() throws Exception {
+        var customer = new CustomerInputDto("");
+        var json = objectMapper.writeValueAsString(customer);
+        var response = mockPost(json, CUSTOMER_BASE_ENDPOINT);
+
+        assertEquals(HttpStatus.BAD_REQUEST.value(), response.getStatus());
+
+        var responseJson = response.getContentAsString();
+        var error = objectMapper.readValue(responseJson, ErrorDto.class);
+
+        assertEquals("Validation failed", error.description());
+        assertTrue(error.fieldErrors().containsKey("mail"));
+        assertEquals("Email is required", error.fieldErrors().get("mail"));
+    }
+
+    @Test
+    void postCustomer_invalidEmailFormat_returnsBadRequest() throws Exception {
+        var customer = new CustomerInputDto("invalid-email");
+        var json = objectMapper.writeValueAsString(customer);
+        var response = mockPost(json, CUSTOMER_BASE_ENDPOINT);
+
+        assertEquals(HttpStatus.BAD_REQUEST.value(), response.getStatus());
+
+        var responseJson = response.getContentAsString();
+        var error = objectMapper.readValue(responseJson, ErrorDto.class);
+
+        assertEquals("Validation failed", error.description());
+        assertTrue(error.fieldErrors().containsKey("mail"));
+        assertEquals("Invalid email format", error.fieldErrors().get("mail"));
+    }
+
     /**
-     * Ensure that customer is not null and that the id is not null.
+     * Ensure that the customer is not null and that the id is not null.
      * Assert that the mail is equal to the expected mail.
      *
      * @param customer     {@link CustomerDto}

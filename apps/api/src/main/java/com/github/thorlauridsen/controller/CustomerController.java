@@ -6,6 +6,8 @@ import com.github.thorlauridsen.exception.CustomerNotFoundException;
 import com.github.thorlauridsen.service.CustomerService;
 import java.net.URI;
 import java.util.UUID;
+
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
@@ -40,7 +42,7 @@ public class CustomerController implements ICustomerController {
      * @return {@link ResponseEntity} with URI location and {@link CustomerDto}.
      */
     @Override
-    public ResponseEntity<CustomerDto> save(CustomerInputDto customerInput) {
+    public ResponseEntity<CustomerDto> save(@Valid CustomerInputDto customerInput) {
         var customer = customerService.save(customerInput.toModel());
         var location = URI.create(CUSTOMER_BASE_ENDPOINT + "/" + customer.id());
 
@@ -48,7 +50,7 @@ public class CustomerController implements ICustomerController {
     }
 
     /**
-     * Get customer given an id.
+     * Get a customer given an id.
      * This method will convert the model to a DTO and return it.
      *
      * @param id UUID of the customer to retrieve.
