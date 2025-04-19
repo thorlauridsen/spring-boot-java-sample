@@ -3,6 +3,8 @@ package com.github.thorlauridsen;
 import com.github.thorlauridsen.model.CustomerInput;
 import com.github.thorlauridsen.model.ICustomerRepo;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -22,9 +24,12 @@ public class CustomerRepoTest {
     @Autowired
     private ICustomerRepo customerRepo;
 
-    @Test
-    public void saveCustomer_getCustomer_success() {
-        var mail = "test@example.com";
+    @ParameterizedTest
+    @ValueSource(strings = {
+            "alice@gmail.com",
+            "bob@gmail.com"
+    })
+    public void saveCustomer_getCustomer_success(String mail) {
         var customer = new CustomerInput(mail);
 
         var savedCustomer = customerRepo.save(customer);
