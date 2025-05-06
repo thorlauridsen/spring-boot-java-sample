@@ -5,8 +5,9 @@ import com.github.thorlauridsen.model.CustomerInput;
 import com.github.thorlauridsen.model.ICustomerRepo;
 import java.util.Optional;
 import java.util.UUID;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -20,19 +21,11 @@ import org.springframework.stereotype.Repository;
  * detect it as a bean and inject it where needed.
  */
 @Repository
+@RequiredArgsConstructor
+@Slf4j
 public class CustomerRepo implements ICustomerRepo {
 
     private final CustomerJpaRepo jpaRepo;
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
-
-    /**
-     * Constructor for customer repository facade.
-     *
-     * @param jpaRepo {@link CustomerJpaRepo} for interacting directly with the customer table.
-     */
-    public CustomerRepo(CustomerJpaRepo jpaRepo) {
-        this.jpaRepo = jpaRepo;
-    }
 
     /**
      * Save a customer.
@@ -43,11 +36,11 @@ public class CustomerRepo implements ICustomerRepo {
      */
     @Override
     public Customer save(CustomerInput customerInput) {
-        logger.info("Saving customer with mail: {}", customerInput.mail());
+        log.info("Saving customer with mail: {}", customerInput.mail());
 
-        var customer = new CustomerEntity(customerInput.mail());
-        var createdCustomer = jpaRepo.save(customer);
-        logger.info("Customer saved with id: {}", createdCustomer.getId());
+        val customer = new CustomerEntity(customerInput.mail());
+        val createdCustomer = jpaRepo.save(customer);
+        log.info("Customer saved with id: {}", createdCustomer.getId());
 
         return new Customer(
                 createdCustomer.getId(),
@@ -64,13 +57,13 @@ public class CustomerRepo implements ICustomerRepo {
      */
     @Override
     public Optional<Customer> findById(UUID id) {
-        logger.info("Finding customer with id: {}", id);
-        var customer = jpaRepo.findById(id);
+        log.info("Finding customer with id: {}", id);
+        val customer = jpaRepo.findById(id);
 
         if (customer.isPresent()) {
-            logger.info("Found customer with id: {}", id);
+            log.info("Found customer with id: {}", id);
         } else {
-            logger.info("Customer not found with id: {}", id);
+            log.info("Customer not found with id: {}", id);
         }
 
         return customer.map(customerEntity -> new Customer(

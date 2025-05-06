@@ -4,9 +4,8 @@ import com.github.thorlauridsen.dto.ErrorDto;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.stream.Collectors;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -24,9 +23,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
  * This ensures that whenever an exception is thrown, a proper error response is returned to the client.
  */
 @ControllerAdvice
+@Slf4j
 public class ControllerAdvisor extends ResponseEntityExceptionHandler {
-
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /**
      * Handles all domain exceptions.
@@ -62,7 +60,7 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
             @NonNull HttpStatusCode status,
             @NonNull WebRequest request
     ) {
-        var fieldErrors = exception.getBindingResult()
+        val fieldErrors = exception.getBindingResult()
                 .getFieldErrors()
                 .stream()
                 .collect(Collectors.toMap(
@@ -70,13 +68,13 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
                         fe -> fe.getDefaultMessage() != null ? fe.getDefaultMessage() : "Invalid value"
                 ));
 
-        var errorDto = new ErrorDto(
+        val errorDto = new ErrorDto(
                 "Validation failed",
                 OffsetDateTime.now(),
                 fieldErrors
         );
 
-        logger.error("Validation failed: {}", fieldErrors, exception);
+        log.error("Validation failed: {}", fieldErrors, exception);
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body(errorDto);
@@ -89,10 +87,10 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
      * @param httpStatus {@link HttpStatus}.
      */
     private ResponseEntity<ErrorDto> error(Exception exception, HttpStatus httpStatus) {
-        var message = exception.getMessage() != null ? exception.getMessage() : "An unexpected error occurred";
-        var errorDto = new ErrorDto(message, OffsetDateTime.now(), new HashMap<>());
+        val message = exception.getMessage() != null ? exception.getMessage() : "An unexpected error occurred";
+        val errorDto = new ErrorDto(message, OffsetDateTime.now(), new HashMap<>());
 
-        logger.error(message, exception);
+        log.error(message, exception);
         return ResponseEntity.status(httpStatus).body(errorDto);
     }
 }

@@ -6,6 +6,7 @@ import com.github.thorlauridsen.model.CustomerInput;
 import com.github.thorlauridsen.persistence.CustomerRepo;
 import com.github.thorlauridsen.service.CustomerService;
 import java.util.UUID;
+import lombok.val;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -29,7 +30,7 @@ public class CustomerServiceTest {
 
     @Test
     public void getCustomerWithRandomIdReturnsNotFound() {
-        var id = UUID.randomUUID();
+        val id = UUID.randomUUID();
         assertThrows(CustomerNotFoundException.class, () -> customerService.findById(id));
     }
 
@@ -39,12 +40,12 @@ public class CustomerServiceTest {
             "bob@gmail.com"
     })
     public void saveCustomerAndGetCustomerSuccess(String mail) throws CustomerNotFoundException {
-        var customer = new CustomerInput(mail);
+        val customer = new CustomerInput(mail);
 
-        var savedCustomer = customerService.save(customer);
+        val savedCustomer = customerService.save(customer);
         assertCustomer(savedCustomer, mail);
 
-        var fetchedCustomer = customerService.findById(savedCustomer.id());
+        val fetchedCustomer = customerService.findById(savedCustomer.id());
         assertCustomer(fetchedCustomer, mail);
     }
 

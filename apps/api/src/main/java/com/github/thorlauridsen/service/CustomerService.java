@@ -5,8 +5,9 @@ import com.github.thorlauridsen.model.Customer;
 import com.github.thorlauridsen.model.CustomerInput;
 import com.github.thorlauridsen.model.ICustomerRepo;
 import java.util.UUID;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.springframework.stereotype.Service;
 
 /**
@@ -20,19 +21,11 @@ import org.springframework.stereotype.Service;
  * The idea here is to keep the various layers separated.
  */
 @Service
+@RequiredArgsConstructor
+@Slf4j
 public class CustomerService {
 
     private final ICustomerRepo customerRepo;
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
-
-    /**
-     * Constructor for customer service.
-     *
-     * @param customerRepo {@link ICustomerRepo} for interacting with the database.
-     */
-    public CustomerService(ICustomerRepo customerRepo) {
-        this.customerRepo = customerRepo;
-    }
 
     /**
      * Save a customer.
@@ -41,7 +34,7 @@ public class CustomerService {
      * @return {@link Customer}.
      */
     public Customer save(CustomerInput customerInput) {
-        logger.info("Saving customer with mail: {}", customerInput.mail());
+        log.info("Saving customer with mail: {}", customerInput.mail());
         return customerRepo.save(customerInput);
     }
 
@@ -53,13 +46,13 @@ public class CustomerService {
      * @throws CustomerNotFoundException if the customer is not found.
      */
     public Customer findById(UUID id) throws CustomerNotFoundException {
-        logger.info("Finding customer with id: {}", id);
+        log.info("Finding customer with id: {}", id);
 
-        var customer = customerRepo.findById(id);
+        val customer = customerRepo.findById(id);
         if (customer.isEmpty()) {
             throw new CustomerNotFoundException("Customer not found with id: " + id);
         }
-        logger.info("Found customer with id: {}", id);
+        log.info("Found customer with id: {}", id);
         return customer.get();
     }
 }

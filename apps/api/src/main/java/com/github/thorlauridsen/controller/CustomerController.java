@@ -4,10 +4,11 @@ import com.github.thorlauridsen.dto.CustomerDto;
 import com.github.thorlauridsen.dto.CustomerInputDto;
 import com.github.thorlauridsen.exception.CustomerNotFoundException;
 import com.github.thorlauridsen.service.CustomerService;
+import jakarta.validation.Valid;
 import java.net.URI;
 import java.util.UUID;
-
-import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import lombok.val;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
@@ -20,18 +21,10 @@ import static com.github.thorlauridsen.controller.BaseEndpoint.CUSTOMER_BASE_END
  * The controller is responsible for converting data transfer objects to models and vice versa.
  */
 @Controller
+@RequiredArgsConstructor
 public class CustomerController implements ICustomerController {
 
     private final CustomerService customerService;
-
-    /**
-     * Constructor for CustomerController.
-     *
-     * @param customerService {@link CustomerService}.
-     */
-    public CustomerController(CustomerService customerService) {
-        this.customerService = customerService;
-    }
 
     /**
      * Save method for customer.
@@ -43,8 +36,8 @@ public class CustomerController implements ICustomerController {
      */
     @Override
     public ResponseEntity<CustomerDto> save(@Valid CustomerInputDto customerInput) {
-        var customer = customerService.save(customerInput.toModel());
-        var location = URI.create(CUSTOMER_BASE_ENDPOINT + "/" + customer.id());
+        val customer = customerService.save(customerInput.toModel());
+        val location = URI.create(CUSTOMER_BASE_ENDPOINT + "/" + customer.id());
 
         return ResponseEntity.created(location).body(CustomerDto.fromModel(customer));
     }
@@ -59,7 +52,7 @@ public class CustomerController implements ICustomerController {
      */
     @Override
     public ResponseEntity<CustomerDto> get(UUID id) throws CustomerNotFoundException {
-        var customer = customerService.findById(id);
+        val customer = customerService.findById(id);
         return ResponseEntity.ok(CustomerDto.fromModel(customer));
     }
 }
