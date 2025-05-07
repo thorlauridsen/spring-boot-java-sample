@@ -1,39 +1,31 @@
 package com.github.thorlauridsen.service;
 
+import com.github.thorlauridsen.exception.CustomerNotFoundException;
 import com.github.thorlauridsen.model.Customer;
 import com.github.thorlauridsen.model.CustomerInput;
-import com.github.thorlauridsen.persistence.CustomerRepoFacade;
-import com.github.thorlauridsen.exception.CustomerNotFoundException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-
+import com.github.thorlauridsen.model.ICustomerRepo;
 import java.util.UUID;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import lombok.val;
+import org.springframework.stereotype.Service;
 
 /**
  * Customer service class.
  * <p>
  * It is annotated with {@link Service} to allow Spring to automatically inject it where needed.
- * This class uses the {@link CustomerRepoFacade} to interact with the repository.
+ * This class uses the {@link ICustomerRepo} to interact with the repository.
  * <p>
  * The service class knows nothing about data transfer objects or database entities.
  * It only knows about the model classes and here you can implement business logic.
  * The idea here is to keep the various layers separated.
  */
 @Service
+@RequiredArgsConstructor
+@Slf4j
 public class CustomerService {
 
-    private final CustomerRepoFacade customerRepo;
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
-
-    /**
-     * Constructor for customer service.
-     *
-     * @param customerRepo {@link CustomerRepoFacade}.
-     */
-    public CustomerService(CustomerRepoFacade customerRepo) {
-        this.customerRepo = customerRepo;
-    }
+    private final ICustomerRepo customerRepo;
 
     /**
      * Save a customer.
@@ -42,7 +34,7 @@ public class CustomerService {
      * @return {@link Customer}.
      */
     public Customer save(CustomerInput customerInput) {
-        logger.info("Saving customer with mail: {}", customerInput.mail());
+        log.info("Saving customer with mail: {}", customerInput.mail());
         return customerRepo.save(customerInput);
     }
 
@@ -54,13 +46,13 @@ public class CustomerService {
      * @throws CustomerNotFoundException if the customer is not found.
      */
     public Customer findById(UUID id) throws CustomerNotFoundException {
-        logger.info("Finding customer with id: {}", id);
+        log.info("Finding customer with id: {}", id);
 
-        var customer = customerRepo.findById(id);
+        val customer = customerRepo.findById(id);
         if (customer.isEmpty()) {
             throw new CustomerNotFoundException("Customer not found with id: " + id);
         }
-        logger.info("Found customer: {}", customer);
+        log.info("Found customer with id: {}", id);
         return customer.get();
     }
 }

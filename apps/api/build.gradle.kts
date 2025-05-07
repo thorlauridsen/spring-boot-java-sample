@@ -1,4 +1,5 @@
 plugins {
+	alias(local.plugins.lombok)
 	alias(local.plugins.springboot)
 	alias(local.plugins.spring.dependencies)
 }
@@ -10,10 +11,14 @@ dependencies {
 
 	// Spring Boot dependencies
 	implementation(local.springboot.starter)
+	implementation(local.springboot.starter.validation)
 	implementation(local.springboot.starter.web)
 
 	// H2 database dependency for in-memory database
 	runtimeOnly(local.h2database)
+
+	// FasterXML Jackson support for Java 8 date/time
+	implementation(local.jackson.datatype.jsr310)
 
 	// Liquibase core dependency for database migrations
 	runtimeOnly(local.liquibase.core)

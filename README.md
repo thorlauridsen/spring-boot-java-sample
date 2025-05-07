@@ -36,6 +36,7 @@ to view the Swagger documentation.
 - [PostgreSQL](https://www.postgresql.org/) - Open-source relational database
 - [H2database](https://github.com/h2database/h2database) - Provides an in-memory database for simple local testing
 - [Liquibase](https://github.com/liquibase/liquibase) - Used to manage database schema changelogs
+- [Lombok](https://github.com/projectlombok/lombok) - Used to reduce boilerplate code
 
 ## Gradle best practices
 [kotlinlang.org](https://kotlinlang.org/docs/gradle-best-practices.html)

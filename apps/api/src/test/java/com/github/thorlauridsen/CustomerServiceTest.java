@@ -1,17 +1,17 @@
 package com.github.thorlauridsen;
 
+import com.github.thorlauridsen.exception.CustomerNotFoundException;
 import com.github.thorlauridsen.model.Customer;
 import com.github.thorlauridsen.model.CustomerInput;
 import com.github.thorlauridsen.persistence.CustomerRepo;
-import com.github.thorlauridsen.exception.CustomerNotFoundException;
 import com.github.thorlauridsen.service.CustomerService;
+import java.util.UUID;
+import lombok.val;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -30,7 +30,7 @@ public class CustomerServiceTest {
 
     @Test
     public void getCustomerWithRandomIdReturnsNotFound() {
-        var id = UUID.randomUUID();
+        val id = UUID.randomUUID();
         assertThrows(CustomerNotFoundException.class, () -> customerService.findById(id));
     }
 
@@ -40,17 +40,17 @@ public class CustomerServiceTest {
             "bob@gmail.com"
     })
     public void saveCustomerAndGetCustomerSuccess(String mail) throws CustomerNotFoundException {
-        var customer = new CustomerInput(mail);
+        val customer = new CustomerInput(mail);
 
-        var savedCustomer = customerService.save(customer);
+        val savedCustomer = customerService.save(customer);
         assertCustomer(savedCustomer, mail);
 
-        var fetchedCustomer = customerService.findById(savedCustomer.id());
+        val fetchedCustomer = customerService.findById(savedCustomer.id());
         assertCustomer(fetchedCustomer, mail);
     }
 
     /**
-     * Ensure that customer is not null and that the id is not null.
+     * Ensure that the customer is not null and that the id is not null.
      * Assert that the mail is equal to the expected mail.
      *
      * @param customer     {@link Customer}
