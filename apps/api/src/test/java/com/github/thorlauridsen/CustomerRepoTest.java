@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * Spins up a Spring Boot context to exercise the repository.
  */
 @SpringBootTest
-public class CustomerRepoTest {
+class CustomerRepoTest {
 
     @Autowired
     private ICustomerRepo customerRepo;
@@ -29,7 +29,7 @@ public class CustomerRepoTest {
             "alice@gmail.com",
             "bob@gmail.com"
     })
-    public void saveCustomer_getCustomer_success(String mail) {
+    void saveCustomer_getCustomer_success(String mail) {
         val customer = new CustomerInput(mail);
 
         val savedCustomer = customerRepo.save(customer);
@@ -48,7 +48,7 @@ public class CustomerRepoTest {
     }
 
     @Test
-    public void getCustomer_nonExistentId_returnsEmpty() {
+    void getCustomer_nonExistentId_returnsEmpty() {
         val id = UUID.randomUUID();
         val customer = customerRepo.findById(id);
         assertTrue(customer.isEmpty());

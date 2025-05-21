@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class CustomerControllerTest extends BaseMockMvc {
+class CustomerControllerTest extends BaseMockMvc {
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -29,7 +29,7 @@ public class CustomerControllerTest extends BaseMockMvc {
     }
 
     @Test
-    public void getCustomer_randomId_returnsNotFound() throws Exception {
+    void getCustomer_randomId_returnsNotFound() throws Exception {
         val id = UUID.randomUUID();
         val response = mockGet(CUSTOMER_BASE_ENDPOINT + "/" + id);
         assertEquals(HttpStatus.NOT_FOUND.value(), response.getStatus());
@@ -40,7 +40,7 @@ public class CustomerControllerTest extends BaseMockMvc {
             "alice@gmail.com",
             "bob@gmail.com"
     })
-    public void postCustomer_getCustomer_success(String mail) throws Exception {
+    void postCustomer_getCustomer_success(String mail) throws Exception {
         val customer = new CustomerInputDto(mail);
         val json = objectMapper.writeValueAsString(customer);
         val response = mockPost(json, CUSTOMER_BASE_ENDPOINT);

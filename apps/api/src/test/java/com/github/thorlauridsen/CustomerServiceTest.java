@@ -23,13 +23,13 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  * This ensures that Spring can automatically inject {@link CustomerService} with a {@link CustomerRepo}
  */
 @SpringBootTest
-public class CustomerServiceTest {
+class CustomerServiceTest {
 
     @Autowired
     private CustomerService customerService;
 
     @Test
-    public void getCustomerWithRandomIdReturnsNotFound() {
+    void getCustomerWithRandomIdReturnsNotFound() {
         val id = UUID.randomUUID();
         assertThrows(CustomerNotFoundException.class, () -> customerService.findById(id));
     }
@@ -39,7 +39,7 @@ public class CustomerServiceTest {
             "alice@gmail.com",
             "bob@gmail.com"
     })
-    public void saveCustomerAndGetCustomerSuccess(String mail) throws CustomerNotFoundException {
+    void saveCustomerAndGetCustomerSuccess(String mail) throws CustomerNotFoundException {
         val customer = new CustomerInput(mail);
 
         val savedCustomer = customerService.save(customer);
