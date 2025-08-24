@@ -29,8 +29,10 @@ dependencies {
 	// Springdoc OpenAPI for providing Swagger documentation
 	implementation(local.springdoc.openapi.starter.webmvc)
 
-	// Spring Boot test dependencies
+	// Spring Boot and Testcontainers test dependencies
 	testImplementation(local.springboot.starter.test)
+	testImplementation(local.springboot.testcontainers)
+	testImplementation(local.testcontainers.postgresql)
 
 	// JUnit platform launcher dependency for running JUnit tests
 	testRuntimeOnly(local.junit.platform.launcher)

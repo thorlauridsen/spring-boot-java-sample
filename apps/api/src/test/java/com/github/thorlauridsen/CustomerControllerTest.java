@@ -10,7 +10,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpStatus;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static com.github.thorlauridsen.controller.BaseEndpoint.CUSTOMER_BASE_ENDPOINT;
@@ -18,6 +20,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+/**
+ * Test class for testing the CustomerController.
+ * This class extends the BaseMockMvc class so this will spin up a Spring Boot instance for the tests.
+ * A local Docker instance is required to run the tests as Testcontainers is used.
+ */
+@ActiveProfiles("postgres")
+@Import(TestContainerConfig.class)
 class CustomerControllerTest extends BaseMockMvc {
 
     @Autowired
