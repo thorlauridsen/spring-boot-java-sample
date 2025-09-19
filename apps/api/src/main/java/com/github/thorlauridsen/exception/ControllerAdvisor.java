@@ -13,8 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -22,7 +22,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
  * Controller advisor for handling exceptions.
  * This ensures that whenever an exception is thrown, a proper error response is returned to the client.
  */
-@ControllerAdvice
+@RestControllerAdvice
 @Slf4j
 public class ControllerAdvisor extends ResponseEntityExceptionHandler {
 

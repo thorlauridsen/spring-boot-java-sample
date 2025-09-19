@@ -10,7 +10,7 @@ import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
 
 import static com.github.thorlauridsen.controller.BaseEndpoint.CUSTOMER_BASE_ENDPOINT;
 
@@ -20,7 +20,7 @@ import static com.github.thorlauridsen.controller.BaseEndpoint.CUSTOMER_BASE_END
  * overrides the methods defined in the interface with implementations.
  * The controller is responsible for converting data transfer objects to models and vice versa.
  */
-@Controller
+@RestController
 @RequiredArgsConstructor
 public class CustomerController implements ICustomerController {
 
