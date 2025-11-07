@@ -28,7 +28,7 @@ Once the system is running, navigate to http://localhost:8080/
 to view the Swagger documentation.
 
 ## Technology
-- [JDK21](https://openjdk.org/projects/jdk/21/) - Latest JDK with long-term support
+- [JDK25](https://openjdk.org/projects/jdk/25/) - Latest JDK with long-term support
 - [Gradle](https://github.com/gradle/gradle) - Used for compilation, building, testing and dependency management
 - [Spring Boot Web MVC](https://github.com/spring-projects/spring-boot) - For creating REST APIs
 - [Springdoc](https://github.com/springdoc/springdoc-openapi) - Provides Swagger documentation for REST APIs
