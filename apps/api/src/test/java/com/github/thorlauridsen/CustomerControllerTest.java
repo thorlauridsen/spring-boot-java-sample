@@ -1,6 +1,5 @@
 package com.github.thorlauridsen;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.thorlauridsen.dto.CustomerDto;
 import com.github.thorlauridsen.dto.CustomerInputDto;
 import com.github.thorlauridsen.dto.ErrorDto;
@@ -10,10 +9,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Import;
+import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.web.servlet.MockMvc;
+import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
+import tools.jackson.databind.json.JsonMapper;
 
 import static com.github.thorlauridsen.controller.BaseEndpoint.CUSTOMER_BASE_ENDPOINT;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -26,22 +28,22 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * A local Docker instance is required to run the tests as Testcontainers is used.
  */
 @ActiveProfiles("postgres")
-@Import(TestContainerConfig.class)
-class CustomerControllerTest extends BaseMockMvc {
+@Testcontainers
+class CustomerControllerTest extends BaseControllerTest {
+
+    @Container
+    @ServiceConnection
+    static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:18");
 
     @Autowired
-    private ObjectMapper objectMapper;
-
-    @Autowired
-    public CustomerControllerTest(MockMvc mockMvc) {
-        super(mockMvc);
-    }
+    private JsonMapper jsonMapper;
 
     @Test
-    void getCustomer_randomId_returnsNotFound() throws Exception {
+    void getCustomer_randomId_returnsNotFound() {
         val id = UUID.randomUUID();
-        val response = mockGet(CUSTOMER_BASE_ENDPOINT + "/" + id);
-        assertEquals(HttpStatus.NOT_FOUND.value(), response.getStatus());
+        val response = get(CUSTOMER_BASE_ENDPOINT + "/" + id);
+
+        response.expectStatus().isEqualTo(HttpStatus.NOT_FOUND);
     }
 
     @ParameterizedTest
@@ -49,51 +51,48 @@ class CustomerControllerTest extends BaseMockMvc {
             "alice@gmail.com",
             "bob@gmail.com"
     })
-    void postCustomer_getCustomer_success(String mail) throws Exception {
+    void postCustomer_getCustomer_success(String mail) {
         val customer = new CustomerInputDto(mail);
-        val json = objectMapper.writeValueAsString(customer);
-        val response = mockPost(json, CUSTOMER_BASE_ENDPOINT);
-        assertEquals(HttpStatus.CREATED.value(), response.getStatus());
+        val json = jsonMapper.writeValueAsString(customer);
+        val response = post(CUSTOMER_BASE_ENDPOINT, json);
+        response.expectStatus().isEqualTo(HttpStatus.CREATED);
 
-        val responseJson = response.getContentAsString();
-        val createdCustomer = objectMapper.readValue(responseJson, CustomerDto.class);
+        val createdCustomer = response.expectBody(CustomerDto.class).returnResult().getResponseBody();
+        assertNotNull(createdCustomer);
         assertCustomer(createdCustomer, mail);
 
-        val response2 = mockGet(CUSTOMER_BASE_ENDPOINT + "/" + createdCustomer.id());
-        assertEquals(HttpStatus.OK.value(), response2.getStatus());
+        val response2 = get(CUSTOMER_BASE_ENDPOINT + "/" + createdCustomer.id());
+        response2.expectStatus().isEqualTo(HttpStatus.OK);
 
-        val responseJson2 = response2.getContentAsString();
-        val fetchedCustomer = objectMapper.readValue(responseJson2, CustomerDto.class);
+        val fetchedCustomer = response2.expectBody(CustomerDto.class).returnResult().getResponseBody();
         assertCustomer(fetchedCustomer, mail);
     }
 
     @Test
-    void postCustomer_blankEmail_returnsBadRequest() throws Exception {
+    void postCustomer_blankEmail_returnsBadRequest() {
         val customer = new CustomerInputDto("");
-        val json = objectMapper.writeValueAsString(customer);
-        val response = mockPost(json, CUSTOMER_BASE_ENDPOINT);
+        val json = jsonMapper.writeValueAsString(customer);
+        val response = post(CUSTOMER_BASE_ENDPOINT, json);
 
-        assertEquals(HttpStatus.BAD_REQUEST.value(), response.getStatus());
+        response.expectStatus().isEqualTo(HttpStatus.BAD_REQUEST);
+        val error = response.expectBody(ErrorDto.class).returnResult().getResponseBody();
 
-        val responseJson = response.getContentAsString();
-        val error = objectMapper.readValue(responseJson, ErrorDto.class);
-
+        assertNotNull(error);
         assertEquals("Validation failed", error.description());
         assertTrue(error.fieldErrors().containsKey("mail"));
         assertEquals("Email is required", error.fieldErrors().get("mail"));
     }
 
     @Test
-    void postCustomer_invalidEmailFormat_returnsBadRequest() throws Exception {
+    void postCustomer_invalidEmailFormat_returnsBadRequest() {
         val customer = new CustomerInputDto("invalid-email");
-        val json = objectMapper.writeValueAsString(customer);
-        val response = mockPost(json, CUSTOMER_BASE_ENDPOINT);
+        val json = jsonMapper.writeValueAsString(customer);
+        val response = post(CUSTOMER_BASE_ENDPOINT, json);
 
-        assertEquals(HttpStatus.BAD_REQUEST.value(), response.getStatus());
+        response.expectStatus().isEqualTo(HttpStatus.BAD_REQUEST);
+        val error = response.expectBody(ErrorDto.class).returnResult().getResponseBody();
 
-        val responseJson = response.getContentAsString();
-        val error = objectMapper.readValue(responseJson, ErrorDto.class);
-
+        assertNotNull(error);
         assertEquals("Validation failed", error.description());
         assertTrue(error.fieldErrors().containsKey("mail"));
         assertEquals("Invalid email format", error.fieldErrors().get("mail"));

@@ -12,6 +12,11 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
+import org.springframework.test.context.ActiveProfiles;
+import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -22,8 +27,14 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  * This class uses the @SpringBootTest annotation to spin up a Spring Boot instance.
  * This ensures that Spring can automatically inject {@link CustomerService} with a {@link CustomerRepo}
  */
+@ActiveProfiles("postgres")
 @SpringBootTest
+@Testcontainers
 class CustomerServiceTest {
+
+    @Container
+    @ServiceConnection
+    static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:18");
 
     @Autowired
     private CustomerService customerService;
