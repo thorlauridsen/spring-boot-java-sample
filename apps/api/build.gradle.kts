@@ -20,9 +20,6 @@ dependencies {
 	// H2 database dependency for in-memory database
 	runtimeOnly(local.h2database)
 
-	// FasterXML Jackson support for Java 8 date/time
-	implementation(local.jackson.datatype.jsr310)
-
 	// PostgreSQL database driver
 	runtimeOnly(local.postgres)
 
