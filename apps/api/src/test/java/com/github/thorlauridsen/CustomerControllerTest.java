@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Test class for testing the CustomerController.
- * This class extends the BaseMockMvc class so this will spin up a Spring Boot instance for the tests.
+ * This class extends the BaseControllerTest class so this will spin up a Spring Boot instance for the tests.
  * A local Docker instance is required to run the tests as Testcontainers is used.
  */
 @ActiveProfiles("postgres")
